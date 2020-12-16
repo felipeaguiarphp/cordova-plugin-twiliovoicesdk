@@ -93,6 +93,8 @@ public class TwilioVoicePlugin extends CordovaPlugin {
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+                        Log.d(TAG, "Registered Voice Client");
+
             String action = intent.getAction();
             if (action.equals(ACTION_SET_FCM_TOKEN)) {
                 String fcmToken = intent.getStringExtra(KEY_FCM_TOKEN);
@@ -108,6 +110,8 @@ public class TwilioVoicePlugin extends CordovaPlugin {
                 /*
                  * Handle the incoming call invite
                  */
+                             Log.d(TAG, "Incoming");
+
                 handleIncomingCallIntent(intent);
             }
         }
@@ -281,6 +285,8 @@ public class TwilioVoicePlugin extends CordovaPlugin {
     }
 
     private void call(final JSONArray arguments, final CallbackContext callbackContext) {
+                                     Log.d(TAG, "call");
+
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
                 try {
@@ -303,6 +309,8 @@ public class TwilioVoicePlugin extends CordovaPlugin {
     }
 
     private void acceptCallInvite(JSONArray arguments, final CallbackContext callbackContext) {
+                                     Log.d(TAG, "accept");
+
         if (mCallInvite == null) {
             callbackContext.sendPluginResult(new PluginResult(
                     PluginResult.Status.ERROR));
@@ -318,6 +326,8 @@ public class TwilioVoicePlugin extends CordovaPlugin {
     }
 
     private void rejectCallInvite(JSONArray arguments, final CallbackContext callbackContext) {
+                                     Log.d(TAG, "reject");
+
         if (mCallInvite == null) {
             callbackContext.sendPluginResult(new PluginResult(
                     PluginResult.Status.ERROR));
@@ -332,6 +342,8 @@ public class TwilioVoicePlugin extends CordovaPlugin {
     }
 
     private void disconnect(JSONArray arguments, final CallbackContext callbackContext) {
+                                     Log.d(TAG, "Incoming");
+
         if (mCall == null) {
             callbackContext.sendPluginResult(new PluginResult(
                     PluginResult.Status.ERROR));
@@ -414,6 +426,8 @@ public class TwilioVoicePlugin extends CordovaPlugin {
     }
 
     private void showNotification(JSONArray arguments, CallbackContext context) {
+                                     Log.d(TAG, "notify");
+
         Context acontext = TwilioVoicePlugin.this.webView.getContext();
         NotificationManager mNotifyMgr = (NotificationManager) acontext.getSystemService(Activity.NOTIFICATION_SERVICE);
         mNotifyMgr.cancelAll();
@@ -578,6 +592,8 @@ public class TwilioVoicePlugin extends CordovaPlugin {
 
     // Process incoming call invites
     private void handleIncomingCallIntent(Intent intent) {
+                                     Log.d(TAG, "incoming intent");
+
         Log.d(TAG, "handleIncomingCallIntent()");
         if (intent != null && intent.getAction() != null && intent.getAction().equals(ACTION_INCOMING_CALL)) {
             mCallInvite = intent.getParcelableExtra(INCOMING_CALL_INVITE);
@@ -634,6 +650,8 @@ public class TwilioVoicePlugin extends CordovaPlugin {
 
     // helper method to get a JSONObject from a Map of Strings
     public JSONObject getJSONObject(Map<String, String> map) throws JSONException {
+                                     Log.d(TAG, "Incoming");
+
         if (map == null) {
             return null;
         }
